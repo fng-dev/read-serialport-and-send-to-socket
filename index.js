@@ -8,6 +8,7 @@ const http = require("http");
 const app = express();
 app.set("port", 3100);
 const server = http.createServer(app);
+
 const io = socketIO(server, {
 	cors: {
 		origin: "*",
