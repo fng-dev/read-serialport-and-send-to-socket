@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .home {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            background-color: #333;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #qrcode {
+            color: #FFF;
+            font-size: 2rem;
+            font-family: sans-serif;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: 2px solid #FFF;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="home">
+        <div id="qrcode">
+            Aguardando lector...
+        </div>
+    </div>
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script>
+        const socket = io("http://127.0.0.1:3100")
+        const element = document.querySelector('#qrcode');
+        let interval = null;
+        socket.on("qrcode", (data) => {
+            element.innerHTML = "Valor Informado: #" + data;
+            clearInterval(interval)
+            interval = setTimeout(() => {
+                element.innerHTML = "Aguardando lector..."
+            }, 3200)
+        })
+    </script>
+</body>
+</html>
